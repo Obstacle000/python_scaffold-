@@ -5,7 +5,7 @@
 
 import httpx
 from typing import Any, Optional
-from src.config import settings
+from agent.config import settings
 
 
 class BaseHttpClient:

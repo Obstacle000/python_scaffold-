@@ -5,7 +5,7 @@ from fastapi.responses import StreamingResponse
 
 from src.api.deps import LLMDep
 from src.schemas import ApiResponse, ChatRequest, ChatResponse
-from src.config import settings
+from agent.config import LLM_MODEL
 
 router = APIRouter(prefix="/chat", tags=["AI 对话示例"])
 
@@ -22,7 +22,7 @@ async def chat_completion(request: ChatRequest, llm: LLMDep):
     return ApiResponse.success(
         data=ChatResponse(
             content=str(response.content),
-            model=settings.llm_model,
+            model=LLM_MODEL,
         )
     )
 

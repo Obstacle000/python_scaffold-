@@ -1,7 +1,7 @@
 """Elasticsearch 异步客户端管理器."""
 
 from elasticsearch import AsyncElasticsearch
-from src.config import settings
+from agent.config import ES_URL
 
 
 class ESClientManager:
@@ -11,11 +11,8 @@ class ESClientManager:
         self.client: AsyncElasticsearch | None = None
 
     def init(self, url: str | None = None) -> None:
-        if not settings.es_enabled:
-            self.client = None
-            return
         if self.client is None:
-            self.client = AsyncElasticsearch(hosts=[url or settings.es_url])
+            self.client = AsyncElasticsearch(hosts=[url or ES_URL])
 
     async def is_available(self) -> bool:
         if self.client is None:
@@ -31,5 +28,4 @@ class ESClientManager:
             self.client = None
 
 
-# 全局单例导出
 es_client_manager = ESClientManager()

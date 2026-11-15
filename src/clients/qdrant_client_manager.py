@@ -1,7 +1,7 @@
 """Qdrant 异步向量库客户端管理器."""
 
 from qdrant_client import AsyncQdrantClient
-from src.config import settings
+from agent.config import QDRANT_URL
 
 
 class QdrantClientManager:
@@ -11,11 +11,8 @@ class QdrantClientManager:
         self.client: AsyncQdrantClient | None = None
 
     def init(self, url: str | None = None) -> None:
-        if not settings.qdrant_enabled:
-            self.client = None
-            return
         if self.client is None:
-            self.client = AsyncQdrantClient(url=url or settings.qdrant_url)
+            self.client = AsyncQdrantClient(url=url or QDRANT_URL)
 
     async def is_available(self) -> bool:
         if self.client is None:
@@ -32,5 +29,4 @@ class QdrantClientManager:
             self.client = None
 
 
-# 全局单例导出
 qdrant_client_manager = QdrantClientManager()

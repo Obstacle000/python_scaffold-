@@ -35,16 +35,16 @@ def main():
         run_mcp_server()
     else:
         import uvicorn
-        from src.config import settings
+        from agent.config import APP_HOST, APP_PORT, DEBUG
 
-        port = args.port or settings.api_port
-        print(f"🌟 启动 FastAPI API 服务: http://{settings.api_host}:{port}")
-        print(f"📖 交互式 API 文档: http://127.0.0.1:{port}/docs")
+        port = args.port or APP_PORT
+        print(f"🌟 启动 FastAPI 服务: http://{APP_HOST}:{port}")
+        print(f"📖 交互式文档: http://127.0.0.1:{port}/docs")
         uvicorn.run(
             "src.main:app",
-            host=settings.api_host,
+            host=APP_HOST,
             port=port,
-            reload=settings.debug,
+            reload=DEBUG,
         )
 
 

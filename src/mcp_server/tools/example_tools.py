@@ -4,6 +4,7 @@
 """
 
 from fastmcp import FastMCP
+from ..http_base import http_client
 
 
 def register_example_tools(mcp: FastMCP) -> None:

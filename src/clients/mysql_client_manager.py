@@ -1,4 +1,4 @@
-"""关系型数据库异步连接池管理器 (支持 MySQL / PostgreSQL / SQLite)."""
+"""关系型数据库异步连接池管理器 (支持 MySQL / SQLite)."""
 
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
-from src.config import settings
+from agent.config import MYSQL_DSN, DEBUG
 
 
 class DatabaseClientManager:
@@ -20,9 +20,8 @@ class DatabaseClientManager:
         """初始化异步数据库引擎."""
         if self.engine is not None:
             return
-        target_dsn = dsn or settings.mysql_dsn
-        kwargs: dict = {"echo": settings.debug, "pool_pre_ping": True}
-        # 如果是 SQLite，不需要设置常规连接池大小
+        target_dsn = dsn or MYSQL_DSN
+        kwargs: dict = {"echo": DEBUG, "pool_pre_ping": True}
         if not target_dsn.startswith("sqlite"):
             kwargs["pool_size"] = 10
             kwargs["max_overflow"] = 20
@@ -42,6 +41,5 @@ class DatabaseClientManager:
             self.session_factory = None
 
 
-# 全局单例导出 (兼容旧命名 mysql_client_manager)
 database_client_manager = DatabaseClientManager()
 mysql_client_manager = database_client_manager

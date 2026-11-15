@@ -22,7 +22,7 @@ from src.clients import (
     llm_client_manager,
     embedding_client_manager,
 )
-from src.config import settings
+from agent.config import EMBEDDING_DIM
 
 # 2. 仓储实现
 from src.repo import (
@@ -105,7 +105,7 @@ def get_example_qdrant_repo(client: QdrantDep) -> ExampleQdrantRepository:
     return ExampleQdrantRepository(
         client=client,
         collection_name="example_vectors",
-        vector_dim=settings.embedding_dim,
+        vector_dim=EMBEDDING_DIM,
     )
 
 

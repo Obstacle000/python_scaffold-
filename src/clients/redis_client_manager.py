@@ -1,7 +1,7 @@
 """Redis 异步连接池管理器."""
 
 from redis.asyncio import Redis
-from src.config import settings
+from agent.config import REDIS_URL
 
 
 class RedisClientManager:
@@ -12,11 +12,8 @@ class RedisClientManager:
 
     def init(self, url: str | None = None) -> None:
         """初始化 Redis 连接池."""
-        if not settings.redis_enabled:
-            self.client = None
-            return
         if self.client is None:
-            self.client = Redis.from_url(url or settings.redis_url, decode_responses=True)
+            self.client = Redis.from_url(url or REDIS_URL, decode_responses=True)
 
     async def is_available(self) -> bool:
         """检测 Redis 服务是否连通."""
@@ -34,5 +31,4 @@ class RedisClientManager:
             self.client = None
 
 
-# 全局单例导出
 redis_client_manager = RedisClientManager()
