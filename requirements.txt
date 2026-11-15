@@ -1,0 +1,23 @@
+# Web API 核心框架
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+python-dotenv>=1.0.0
+httpx>=0.27.0
+
+# AI / 大模型 / MCP 生态
+langchain>=0.1.0
+langchain-openai>=0.1.0
+fastmcp>=0.1.0
+
+# 关系型数据库 (按需可选)
+SQLAlchemy>=2.0.0
+aiosqlite>=0.20.0
+# aiomysql>=0.2.0  # 如需连接真实 MySQL 时取消注释
+# asyncpg>=0.29.0   # 如需连接 PostgreSQL 时取消注释
+
+# 缓存与向量库 (按需可选)
+# redis>=5.0.0
+# qdrant-client>=1.8.0
+# elasticsearch[async]>=8.12.0
