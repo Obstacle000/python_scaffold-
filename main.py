@@ -5,14 +5,7 @@
 - 启动 MCP Server: python main.py --mcp
 """
 
-import sys
 import argparse
-from pathlib import Path
-
-# 将项目根目录置于模块检索首位
-PROJECT_ROOT = Path(__file__).resolve().parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
 
 
 def main():
@@ -35,7 +28,7 @@ def main():
         run_mcp_server()
     else:
         import uvicorn
-        from agent.config import APP_HOST, APP_PORT, DEBUG
+        from src.agent.config import APP_HOST, APP_PORT, DEBUG
 
         port = args.port or APP_PORT
         print(f"🌟 启动 FastAPI 服务: http://{APP_HOST}:{port}")

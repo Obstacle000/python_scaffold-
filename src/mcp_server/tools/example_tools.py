@@ -3,6 +3,8 @@
 通过在函数上添加 `@mcp.tool()` 装饰器，即可自动将 Python 业务逻辑暴露给大模型作为外部工具调用。
 """
 
+import json
+
 from fastmcp import FastMCP
 from ..http_base import http_client
 

@@ -1,7 +1,7 @@
 """Redis 异步连接池管理器."""
 
 from redis.asyncio import Redis
-from agent.config import REDIS_URL
+from src.agent.config import REDIS_URL
 
 
 class RedisClientManager:

@@ -1,7 +1,7 @@
 """Qdrant 异步向量库客户端管理器."""
 
 from qdrant_client import AsyncQdrantClient
-from agent.config import QDRANT_URL
+from src.agent.config import QDRANT_URL
 
 
 class QdrantClientManager:

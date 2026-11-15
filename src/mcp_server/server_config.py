@@ -15,3 +15,6 @@ MCP_PORT = int(os.getenv("MCP_PORT", "9000"))
 # HTTP 客户端配置
 HTTP_TIMEOUT = int(os.getenv("HTTP_TIMEOUT", "30"))
 HTTP_MAX_CONNECTIONS = int(os.getenv("HTTP_MAX_CONNECTIONS", "20"))
+
+# MCP 工具回调的后端服务地址
+ERP_BASE_URL = os.getenv("ERP_BASE_URL", "")

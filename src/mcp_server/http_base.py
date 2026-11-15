@@ -5,7 +5,11 @@
 
 import httpx
 from typing import Any, Optional
-from agent.config import settings
+from src.mcp_server.server_config import (
+    ERP_BASE_URL,
+    HTTP_MAX_CONNECTIONS,
+    HTTP_TIMEOUT,
+)
 
 
 class BaseHttpClient:
@@ -22,15 +26,18 @@ class BaseHttpClient:
     @property
     def client(self) -> httpx.AsyncClient:
         if self._client is None or self._client.is_closed:
-            self._client = httpx.AsyncClient(
-                base_url=ERP_BASE_URL,
-                timeout=httpx.Timeout(HTTP_TIMEOUT),
-                limits=httpx.Limits(
+            # httpx 不接受 base_url=None，只有在配置了后端地址时才传入
+            kwargs: dict[str, Any] = {
+                "timeout": httpx.Timeout(HTTP_TIMEOUT),
+                "limits": httpx.Limits(
                     max_connections=HTTP_MAX_CONNECTIONS,
                     max_keepalive_connections=10,
                 ),
-                headers={"Content-Type": "application/json"},
-            )
+                "headers": {"Content-Type": "application/json"},
+            }
+            if ERP_BASE_URL:
+                kwargs["base_url"] = ERP_BASE_URL
+            self._client = httpx.AsyncClient(**kwargs)
         return self._client
 
     async def get(self, url: str, params: Optional[dict] = None, headers: Optional[dict] = None) -> Any:

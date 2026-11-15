@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
-from agent.config import MYSQL_DSN, DEBUG
+from src.agent.config import MYSQL_DSN, DEBUG
 
 
 class DatabaseClientManager:

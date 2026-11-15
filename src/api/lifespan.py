@@ -9,8 +9,9 @@ from src.clients import (
     qdrant_client_manager,
     es_client_manager,
     embedding_client_manager,
+    llm_client_manager
 )
-from agent.config import APP_NAME
+from src.agent.config import APP_NAME
 
 
 @asynccontextmanager
@@ -20,7 +21,10 @@ async def lifespan(app: FastAPI):
 
     # 初始化数据库与客户端连接
     database_client_manager.init()
-    embedding_client_manager.client  # 触发预热
+    embedding_client_manager.init()  # 触发预热
+    redis_client_manager.init()
+    es_client_manager.init()
+    qdrant_client_manager.init()
 
     yield
 
@@ -30,4 +34,6 @@ async def lifespan(app: FastAPI):
     await es_client_manager.close()
     await redis_client_manager.close()
     await database_client_manager.close()
+    await llm_client_manager.close()
+    await embedding_client_manager.close()
     print("✨ 所有资源已安全释放")

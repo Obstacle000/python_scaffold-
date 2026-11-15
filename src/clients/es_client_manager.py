@@ -1,7 +1,7 @@
 """Elasticsearch 异步客户端管理器."""
 
 from elasticsearch import AsyncElasticsearch
-from agent.config import ES_URL
+from src.agent.config import ES_URL
 
 
 class ESClientManager:

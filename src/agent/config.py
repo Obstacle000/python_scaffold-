@@ -4,7 +4,7 @@ LLM、数据库、Redis、Qdrant、MCP 连接参数
 风格完全对齐 ERP-AGENT
 """
 import os
-from core.env_utils import get_env, get_env_int, get_env_bool
+from src.core.env_utils import get_env, get_env_int, get_env_bool
 
 # ============ LLM 配置 ============
 LLM_MODEL = get_env("LLM_MODEL", "deepseek-chat")

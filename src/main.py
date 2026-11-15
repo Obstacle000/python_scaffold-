@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 
 from src.api.lifespan import lifespan
 from src.api.v1.router import api_v1_router
-from agent.config import APP_NAME, APP_HOST, APP_PORT, DEBUG
+from src.agent.config import APP_NAME, APP_HOST, APP_PORT, DEBUG
 from src.exceptions import AppError
 
 # 创建 FastAPI 实例

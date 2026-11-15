@@ -22,7 +22,8 @@ from src.clients import (
     llm_client_manager,
     embedding_client_manager,
 )
-from agent.config import EMBEDDING_DIM
+from src.clients.llm_client_manager import LLMClientManager
+from src.agent.config import EMBEDDING_DIM
 
 # 2. 仓储实现
 from src.repo import (
@@ -67,9 +68,8 @@ def get_es_client() -> AsyncElasticsearch | None:
     return es_client_manager.client
 
 
-def get_llm() -> Any:
-    """获取 LangChain ChatOpenAI 大模型实例."""
-    return llm_client_manager.get_llm()
+def get_llm_manager() -> LLMClientManager:
+    return llm_client_manager
 
 
 def get_embedding() -> Any:
@@ -82,8 +82,8 @@ DBSessionDep = Annotated[AsyncSession, Depends(get_db_session)]
 RedisDep = Annotated[Redis | None, Depends(get_redis_client)]
 QdrantDep = Annotated[AsyncQdrantClient | None, Depends(get_qdrant_client)]
 ESDep = Annotated[AsyncElasticsearch | None, Depends(get_es_client)]
-LLMDep = Annotated[Any, Depends(get_llm)]
 EmbeddingDep = Annotated[Any, Depends(get_embedding)]
+LLMDep = Annotated[LLMClientManager, Depends(get_llm_manager)]
 
 
 # =====================================================================

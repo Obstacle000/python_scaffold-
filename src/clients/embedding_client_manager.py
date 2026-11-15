@@ -1,7 +1,8 @@
 """Embedding 向量模型客户端管理器."""
 
+import inspect
 from typing import Any
-from agent.config import (
+from src.agent.config import (
     EMBEDDING_API_KEY,
     EMBEDDING_BASE_URL,
     EMBEDDING_MODEL,
@@ -33,6 +34,24 @@ class EmbeddingClientManager:
                 kwargs["base_url"] = self.base_url
             self._client = OpenAIEmbeddings(**kwargs)
         return self._client
+
+    def init(self) -> None:
+        """提前构造 embedding 客户端（构造不建立连接，不是真正的预热）."""
+        _ = self.client
+
+    async def close(self) -> None:
+        """关闭底层 openai SDK 连接池."""
+        client, self._client = self._client, None
+        if client is None:
+            return
+        # OpenAIEmbeddings 的 SDK client 字段名与 ChatOpenAI 不同
+        for attr in ("async_client", "client"):
+            sdk = getattr(client, attr, None)
+            if sdk is None:
+                continue
+            result = sdk.close()
+            if inspect.isawaitable(result):
+                await result
 
     def has_valid_key(self) -> bool:
         """判断是否配置了有效密钥."""
