@@ -5,7 +5,7 @@
 from pathlib import Path
 from deepagents.middleware import SummarizationToolMiddleware
 
-from .middlewares.context_injection import ContextInjectionMiddleware
+from .middlewares.example import ContextInjectionMiddleware
 from .middlewares.skills_sync import SkillsSyncMiddleware
 from .middlewares.sandbox_breaker import SandboxCircuitBreakerMiddleware
 from .middlewares.tools_summarization import ToolsSummarizationMiddleware
