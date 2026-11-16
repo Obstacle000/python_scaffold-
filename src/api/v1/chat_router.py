@@ -9,6 +9,9 @@ from src.agent.config import LLM_MODEL
 
 router = APIRouter(prefix="/chat", tags=["AI 对话示例"])
 
+# 可以新建一个工具类
+def _format_sse(event: str, payload: dict[str, Any]) -> str:
+    return f"event: {event}\ndata: {json.dumps(payload, ensure_ascii=False)}\n\n"
 
 @router.post("", response_model=ApiResponse[ChatResponse], summary="普通单次对话")
 async def chat_completion(request: ChatRequest, llm_mgr: LLMDep):
@@ -34,6 +37,6 @@ async def chat_stream(request: ChatRequest, llm_mgr: LLMDep):
     async def event_generator():
         async for chunk in llm.astream(request.prompt):
             if chunk.content:
-                yield str(chunk.content)
+                yield _format_sse("token", json.loads(chunk.content))
 
     return StreamingResponse(event_generator(), media_type="text/plain; charset=utf-8")
